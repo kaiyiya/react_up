@@ -1,0 +1,24 @@
+{
+  "name": "react_up",
+  "version": "1.0.0",
+  "description": "react进阶以及源码分析",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "preview": "vite preview --port 3000",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-transform-react-jsx": "^7.27.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.1",
+    "vite": "^4.5.1"
+  }
+}
