@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from "react-dom/client";
-// import App from './up/app';
-import App1 from './up/app';
+import Index from './up/update/Index';
+import IndexFun from './up/update/IndexFun';
 const root = createRoot(document.getElementById("root"));
-root.render(<App1 />);
+root.render(<IndexFun />);
