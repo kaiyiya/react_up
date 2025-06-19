@@ -1,10 +1,6 @@
 import React from 'react';
 import { createRoot } from "react-dom/client";
-import ForwardRefIndex from './up/ref/RefCombine';
-import HOC from './up/ref/HOC';
-import Father from './up/ref/Ref';
-import Index from './up/ref/RefSon';
-import IndexR from './up/ref/RefNew';
-
+import Provider1Demo from './up/provider/Demo4';
+import DemoProvider5 from './up/provider/Demo5';
 const root = createRoot(document.getElementById("root"));
-root.render(<IndexR />);
+root.render(<DemoProvider5 />);
