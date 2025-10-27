@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from "react-dom/client";
-import Provider1Demo from './up/provider/Demo4';
-import DemoProvider5 from './up/provider/Demo5';
+import Render2, { Render2Index } from './up/render/Render2';
+import Render3 from './up/render/Render3';
 const root = createRoot(document.getElementById("root"));
-root.render(<DemoProvider5 />);
+root.render(<Render3 />);
