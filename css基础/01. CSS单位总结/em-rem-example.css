@@ -1,0 +1,170 @@
+/* 设置根元素字体大小为 16px */
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  border-bottom: 2px solid #007acc;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #555;
+  margin-top: 30px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.box {
+  padding: 20px;
+  margin: 20px 0;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.px-box {
+  font-size: 16px;
+  background-color: #e8f4fd;
+}
+
+.px-box p {
+  font-size: 16px;
+  color: #007acc;
+}
+
+.em-box {
+  font-size: 1.2em; /* 相对于父元素的字体大小 */
+  background-color: #fff2e8;
+}
+
+.em-box p {
+  font-size: 1.5em; /* 相对于.box的字体大小 */
+  color: #ff7043;
+}
+
+.rem-box {
+  font-size: 1.2rem; /* 相对于根元素(html)的字体大小: 16px * 1.2 = 19.2px */
+  background-color: #e8f5e9;
+}
+
+.rem-box p {
+  font-size: 1.5rem; /* 相对于根元素(html)的字体大小: 16px * 1.5 = 24px */
+  color: #4caf50;
+}
+
+.inner-box {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px dashed #999;
+  border-radius: 5px;
+}
+
+.em-box .inner-box {
+  font-size: 1.2em; /* 相对于.em-box的字体大小: 产生累积效应 */
+  background-color: rgba(255, 112, 67, 0.1);
+}
+
+.em-box .inner-box p {
+  font-size: 1em; /* 继承父元素.inner-box的字体大小 */
+}
+
+.rem-box .inner-box {
+  font-size: 1.2rem; /* 相对于根元素(html)的字体大小: 不受父元素影响 */
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.rem-box .inner-box p {
+  font-size: 1rem; /* 相对于根元素(html)的字体大小 */
+}
+
+.em-box .inner-box .inner-box {
+  font-size: 1.1em;
+  background-color: rgba(255, 112, 67, 0.2);
+}
+
+.rem-box .inner-box .inner-box {
+  font-size: 1.1rem;
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+/* 样式说明 */
+span {
+  display: block;
+  margin-top: 5px;
+  font-style: italic;
+  color: #666;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.explanation {
+  background-color: #fff8e1;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.analogy p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.analogy ul {
+  margin: 10px 0 20px 20px;
+}
+
+.analogy li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.summary {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px dashed #ccc;
+}
+
+.comparison {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.comparison-item {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f0f8ff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.comparison-item h3 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+}
+
+.comparison-item ul {
+  padding-left: 20px;
+}
+
+.comparison-item li {
+  margin: 10px 0;
+  line-height: 1.5;
+}

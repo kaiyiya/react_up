@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+div {
+  font-size: 4rem;
+  /* 40px */
+  width: 30rem;
+  /* 300px */
+  height: 30rem;
+  /* 300px */
+  outline: solid 1px black;
+  margin: 10px;
+}
+
+p {
+  font-size: 2rem;
+  /* 20px */
+  width: 15rem;
+  /* 150px */
+  height: 15rem;
+  /* 150px */
+  outline: solid 1px red;
+}
+
+span {
+  font-size: 1.5rem;
+  width: 10rem;
+  height: 10rem;
+  outline: solid 1px blue;
+  display: block;
+}

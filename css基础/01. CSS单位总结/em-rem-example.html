@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>em 和 rem 单位的区别</title>
+    <link href="./em-rem-example.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>em 和 rem 单位的区别</h1>
+    <p style="text-align: center; color: #666;">用通俗的方式解释 em 和 rem 的区别</p>
+    
+    <div class="container">
+        <div class="explanation">
+            <h2>通俗解释</h2>
+            <div class="analogy">
+                <p><strong>em 就像代代相传的家族特征：</strong></p>
+                <ul>
+                    <li>你(元素)的特征会受到你爸爸(父元素)的影响</li>
+                    <li>你儿子(子元素)的特征又会受到你的影响</li>
+                    <li>一代影响一代，形成"累积效应"</li>
+                </ul>
+                
+                <p><strong>rem 就像基因检测：</strong></p>
+                <ul>
+                    <li>无论你是谁的孩子，你的基因始终来自祖先(根元素html)</li>
+                    <li>你的孩子也直接继承祖先的基因，不受你的影响</li>
+                    <li>每个人的基因都直接追溯到同一个源头</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>使用 px 作为基准单位</h2>
+        <div class="box px-box">
+            <p>这是使用 px 作为单位的盒子</p>
+            <span>文字大小: 16px (固定值，就像身高尺子)</span>
+        </div>
+
+        <h2>使用 em 作为单位</h2>
+        <div class="box em-box">
+            <p>这是使用 em 作为单位的盒子</p>
+            <span>文字大小: 1.5em (相对于父元素，就像"你比我高一点")</span>
+            <div class="inner-box">
+                <p>嵌套的子元素</p>
+                <span>文字大小: 1.2em (相对于父元素，会产生累积效应)</span>
+                <div class="inner-box">
+                    <p>再嵌套一层</p>
+                    <span>文字大小: 1.1em (继续基于上一级计算)</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>使用 rem 作为单位</h2>
+        <div class="box rem-box">
+            <p>这是使用 rem 作为单位的盒子</p>
+            <span>文字大小: 1.5rem (相对于根元素，就像"我跟祖先一样高")</span>
+            <div class="inner-box">
+                <p>嵌套的子元素</p>
+                <span>文字大小: 1.2rem (同样相对于根元素，不会受父元素影响)</span>
+                <div class="inner-box">
+                    <p>再嵌套一层</p>
+                    <span>文字大小: 1.1rem (仍然基于根元素计算)</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h2>总结</h2>
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h3>em 特点</h3>
+                    <ul>
+                        <li>相对父元素，一代传一代</li>
+                        <li>会产生累积效应，越嵌套越大/越小</li>
+                        <li>适合局部组件的内部比例控制</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h3>rem 特点</h3>
+                    <ul>
+                        <li>只看根元素，不管父元素</li>
+                        <li>没有累积效应，计算简单</li>
+                        <li>适合全站统一的尺寸控制</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
