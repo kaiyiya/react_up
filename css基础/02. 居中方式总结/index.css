@@ -1,0 +1,21 @@
+.container {
+  width: 500px;
+  height: 300px;
+  background-color: pink;
+  text-align: center;
+}
+.item {
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  vertical-align: middle;
+  margin: 0 auto;
+  display: inline-block;
+}
+.brotherBox {
+  height: 100%;
+  /* width: 2px; */
+  background: red;
+  display: inline-block;
+  vertical-align: middle;
+}
