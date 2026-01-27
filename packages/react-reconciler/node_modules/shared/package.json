@@ -1,7 +1,7 @@
 {
   "name": "shared",
   "version": "1.0.0",
-  "description": "shared hepler functions and symbols",
+  "description": "所有公用辅助方法以及类型定义",
   "keywords": [],
   "author": "",
   "license": "ISC"

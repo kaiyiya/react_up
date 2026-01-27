@@ -11,7 +11,7 @@ const ReactElement = function (type: Type,
         key,
         ref,
         props,
-        __mark: 'erxiao'
+        __mark: 'zll'
     }
     return element;
 

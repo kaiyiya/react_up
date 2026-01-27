@@ -4,13 +4,13 @@ export type Props = any;
 export type Ref = any;
 export type ElementType = any;
 
-export interface ReactElementType {
+export interface ReactElemenType {
     $$typeof: symbol | number;
     key: Key;
-    type: ElementType;
-    ref: Ref;
     props: Props;
+    ref: Ref;
+    type: ElementType;
     __mark: string;
 }
 
-export type Action<State> = State | ((prevState: State) => State);
+export type Action<State> = State | ((prevState: State) => State)
