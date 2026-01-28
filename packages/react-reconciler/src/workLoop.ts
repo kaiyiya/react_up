@@ -2,6 +2,8 @@ import {FiberNode, FiberRootNode, createWorkInProgress} from './fiber';
 import {beginWork} from './beginWork';
 import {completeWork} from './completeWork';
 import {HostRoot} from './workTags';
+import {MutationMask, NoFlags} from "./fiberFlags";
+import {commitMutationEffects} from "./commitWork";
 
 let workInProgress: FiberNode | null = null;
 
@@ -41,6 +43,43 @@ function renderRoot(root: FiberRootNode) {
 // 初始化 workInProgress 变量
 function prepareFreshStack(root: FiberRootNode) {
     workInProgress = createWorkInProgress(root.current, {});
+}
+
+/**
+ * 注释: 提交阶段
+ * 时间: 2026/1/28 10:09
+ * @author 钟林林
+ */
+function commitRoot(root: FiberRootNode) {
+    const finishedWork = root.finishedWork
+    if (finishedWork === null) {
+        return;
+    }
+    if (__DEV__) {
+        console.warn('commitRoot阶段开始', finishedWork)
+
+
+    }
+//     重置
+    root.finishedWork = null;
+//     判断是否存在3个子阶段需要执行的操作
+//     判断root的flags和subTreeFlags
+    const subtreeHasEffect = (finishedWork.subtreeFlags & MutationMask) !== NoFlags;
+    const rootHasEffect = (finishedWork.flags & MutationMask) !== NoFlags;
+    if (subtreeHasEffect || rootHasEffect) {
+//     beforeMutation
+
+
+//     Mutation
+        commitMutationEffects(finishedWork);
+        root.current = finishedWork
+
+
+//     layout
+    } else {
+        root.current = finishedWork
+    }
+
 }
 
 // 深度优先遍历，向下递归子节点
