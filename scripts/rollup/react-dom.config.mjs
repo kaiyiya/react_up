@@ -1,4 +1,4 @@
-import {getPackageJSON, resolvePkgPath, getBaseRollupPlugins} from './utils';
+import {getPackageJSON, resolvePkgPath, getBaseRollupPlugins} from './utils.mjs';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import alias from '@rollup/plugin-alias';
 import path from "path";
@@ -12,7 +12,7 @@ const pkgDistPath = resolvePkgPath(name, true);
 export default [
     // react-dom
     {
-        input: path.join(pkgDistPath, 'module'),
+        input: path.join(pkgPath, module),
         output: [
             {
                 file: path.join(pkgDistPath, 'index.js'),

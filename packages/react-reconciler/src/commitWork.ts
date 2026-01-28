@@ -59,6 +59,7 @@ function getHostParent(fiber: FiberNode): Container {
     if (__DEV__) {
         console.warn('未找到 host parent')
     }
+    throw new Error('未找到 host parent')
 }
 
 function appendPlacementNodeIntoContainer(finishedWork: FiberNode, hostParent: Container) {

@@ -1,8 +1,13 @@
 import path from 'path'
 import * as fs from "fs";
+import { fileURLToPath } from 'url';
 import cjs from '@rollup/plugin-commonjs'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const pkgPath = path.resolve(__dirname, '../../packages')
 const distPath = path.resolve(__dirname, '../../dist/node_modules')
 

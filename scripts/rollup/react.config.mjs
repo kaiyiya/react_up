@@ -1,4 +1,4 @@
-import {getBaseRollupPlugins, getPackageJSON, resolvePkgPath} from "./utils";
+import {getBaseRollupPlugins, getPackageJSON, resolvePkgPath} from "./utils.mjs";
 import path from "path";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 

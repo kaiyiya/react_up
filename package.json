@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .ts,.jsx,.tsx --fix --quiet ./packages",
-    "build-dev": "rimraf dist && rollup --config scripts/rollup/dev.config.js --bundleConfigAsCjs"
+    "build-dev": "rimraf dist && rollup --config scripts/rollup/dev.config.mjs"
   },
   "keywords": [],
   "author": "",
