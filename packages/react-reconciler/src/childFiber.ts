@@ -26,7 +26,11 @@ function ChildReconciler(shouldTrackSideEffects: boolean) {
         currentFiber: FiberNode | null,
         content: string | number
     ) {
-        const fiber = new FiberNode(HostText, {content}, null);
+        const fiber = new FiberNode(
+            HostText,
+            {content},
+            null
+        );
         fiber.return = returnFiber;
         return fiber;
     }

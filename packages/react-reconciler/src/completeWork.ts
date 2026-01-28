@@ -60,7 +60,6 @@ function appendAllChildren(parent: FiberNode, workInProgress: FiberNode) {
             appendInitialChild(parent, node.stateNode);
         } else if (node.child !== null) {
             // 递归处理其他类型的组件节点的子节点
-            node.child = node;
             node = node.child;
             continue;
         }
@@ -75,8 +74,7 @@ function appendAllChildren(parent: FiberNode, workInProgress: FiberNode) {
             node = node.return;
         }
         // 处理下一个兄弟节点
-        node.sibling.return = node.return;
-        node.sibling = node;
+        node = node.sibling;
     }
 }
 

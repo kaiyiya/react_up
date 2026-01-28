@@ -1,4 +1,4 @@
-import {ReactElemenType} from 'shared/ReactTypes';
+import {ReactElementType} from 'shared/ReactTypes';
 import {FiberNode} from './fiber';
 import {UpdateQueue, processUpdateQueue} from './updateQueue';
 import {HostComponent, HostRoot, HostText} from './workTags';
@@ -56,7 +56,7 @@ function updateHostText() {
 // 生成子节点对应的 workInProgress FiberNode
 function reconcileChildren(
     workInProgress: FiberNode,
-    children?: ReactElemenType
+    children?: ReactElementType
 ) {
     // alternate 指向节点的备份节点，即 current
     const current = workInProgress.alternate;
@@ -69,6 +69,10 @@ function reconcileChildren(
         );
     } else {
         // 首屏渲染阶段
-        workInProgress.child = mountChildFibers(workInProgress, null, children);
+        workInProgress.child = mountChildFibers(
+            workInProgress,
+            null,
+            children
+        );
     }
 }

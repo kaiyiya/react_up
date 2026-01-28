@@ -5,3 +5,5 @@ export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T exte
 export type Expect<T extends true> = T
 
 
+
+
