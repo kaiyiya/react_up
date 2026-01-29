@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .ts,.jsx,.tsx --fix --quiet ./packages",
-    "build-dev": "rimraf dist && rollup --config scripts/rollup/dev.config.mjs"
+    "build-dev": "node scripts/build-without-clean.js",
+    "build-dev:clean": "rimraf dist && rollup --config scripts/rollup/dev.config.mjs",
+    "build-dev:force": "taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM msedge.exe /T 2>nul & rimraf dist && rollup --config scripts/rollup/dev.config.mjs || rimraf dist && rollup --config scripts/rollup/dev.config.mjs",
+    "test:compile": "node scripts/compile-test.js",
+    "test": "pnpm run build-dev && pnpm run test:compile && pnpm dlx serve -p 8000",
+    "test:watch": "pnpm run build-dev && pnpm run test:compile && pnpm dlx serve -p 8000"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +25,7 @@
     "@rollup/plugin-replace": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^8.50.0",
     "commitlint": "^20.2.0",
+    "esbuild": "^0.24.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

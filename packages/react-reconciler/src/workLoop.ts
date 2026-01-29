@@ -38,6 +38,11 @@ function renderRoot(root: FiberRootNode) {
             workInProgress = null;
         }
     } while (true);
+    
+    // 渲染完成，设置 finishedWork
+    root.finishedWork = workInProgress;
+    // 进入提交阶段
+    commitRoot(root);
 }
 
 // 初始化 workInProgress 变量

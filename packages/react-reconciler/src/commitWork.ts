@@ -40,8 +40,9 @@ const commitPlacement = (finishedWork: FiberNode) => {
         console.warn('commitPlacement', finishedWork)
     }
     const hostParent = getHostParent(finishedWork)
-
-
+    if (hostParent !== null) {
+        appendPlacementNodeIntoContainer(finishedWork, hostParent)
+    }
 }
 
 function getHostParent(fiber: FiberNode): Container {
