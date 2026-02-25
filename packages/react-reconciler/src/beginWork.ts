@@ -1,8 +1,14 @@
-import {ReactElementType} from 'shared/ReactTypes';
-import {FiberNode} from './fiber';
-import {UpdateQueue, processUpdateQueue} from './updateQueue';
-import {HostComponent, HostRoot, HostText} from './workTags';
-import {reconcileChildFibers, mountChildFibers} from './childFiber';
+import { ReactElementType } from 'shared/ReactTypes';
+import { FiberNode } from './fiber';
+import { UpdateQueue, processUpdateQueue } from './updateQueue';
+import {
+    FunctionComponent,
+    HostComponent,
+    HostRoot,
+    HostText
+} from './workTags';
+import { reconcileChildFibers, mountChildFibers } from './childFiber';
+import { renderWithHooks } from './fiberHooks';
 
 // 比较并返回子 FiberNode
 export const beginWork = (workInProgress: FiberNode) => {
@@ -11,6 +17,8 @@ export const beginWork = (workInProgress: FiberNode) => {
             return updateHostRoot(workInProgress);
         case HostComponent:
             return updateHostComponent(workInProgress);
+        case FunctionComponent:
+            return updateFunctionComponent(workInProgress);
         case HostText:
             return updateHostText();
         default:
@@ -29,7 +37,7 @@ function updateHostRoot(workInProgress: FiberNode) {
     // 清空更新链表
     updateQueue.shared.pending = null;
     // 计算待更新状态的最新值
-    const {memorizedState} = processUpdateQueue(baseState, pending);
+    const { memorizedState } = processUpdateQueue(baseState, pending);
     workInProgress.memorizedState = memorizedState;
 
     // 处理子节点的更新逻辑
@@ -43,6 +51,12 @@ function updateHostRoot(workInProgress: FiberNode) {
 function updateHostComponent(workInProgress: FiberNode) {
     const nextProps = workInProgress.pendingProps;
     const nextChildren = nextProps.children;
+    reconcileChildren(workInProgress, nextChildren);
+    return workInProgress.child;
+}
+
+function updateFunctionComponent(workInProgress: FiberNode) {
+    const nextChildren = renderWithHooks(workInProgress);
     reconcileChildren(workInProgress, nextChildren);
     return workInProgress.child;
 }
@@ -69,10 +83,6 @@ function reconcileChildren(
         );
     } else {
         // 首屏渲染阶段
-        workInProgress.child = mountChildFibers(
-            workInProgress,
-            null,
-            children
-        );
+        workInProgress.child = mountChildFibers(workInProgress, null, children);
     }
 }

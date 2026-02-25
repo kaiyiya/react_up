@@ -1,5 +1,6 @@
 import { Action } from 'shared/ReactTypes';
 import { Update } from './fiberFlags';
+import { Dispatch } from 'react/src/currentDispatcher';
 
 // 定义 Update 数据结构
 export interface Update<State> {
@@ -11,6 +12,7 @@ export interface UpdateQueue<State> {
     shared: {
         pending: Update<State> | null;
     };
+    dispatch: Dispatch<State> | null;
 }
 
 // 创建 Update 实例的方法
@@ -25,7 +27,8 @@ export const creatUpdateQueue = <State>(): UpdateQueue<State> => {
     return {
         shared: {
             pending: null
-        }
+        },
+        dispatch: null
     };
 };
 
@@ -48,13 +51,10 @@ export const processUpdateQueue = <State>(
     if (pendingUpdate !== null) {
         const action = pendingUpdate.action;
         if (action instanceof Function) {
-            // 若 action 是回调函数：(baseState = 1, update = (i) => i * 5) => memorizedState = 5
-            // 用于 useState 的函数式更新：setState(prev => prev * 5)
+            // 若 action 是回调函数：(baseState = 1, update = (i) => 5i)) => memorizedState = 5
             result.memorizedState = action(baseState);
         } else {
-            // 若 action 是状态值或 ReactElement
-            // 用于 useState 的直接更新：setState(2) => memorizedState = 2
-            // 或根节点渲染：render(<App />) => memorizedState = <App />
+            // 若 action 是状态值：(baseState = 1, update = 2) => memorizedState = 2
             result.memorizedState = action;
         }
     }
