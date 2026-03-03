@@ -46,6 +46,14 @@ export class FiberNode {
     }
 }
 
+/**
+ * @title: 整个应用对应的 Fiber 根节点容器
+ * @description:
+ * - container: 真实渲染目标（如 DOM 容器），即 createRoot 传入的根节点
+ * - current: 当前已提交的 Fiber 树根（HostRoot fiber），代表“当前屏幕上的那棵树”
+ * - finishedWork: 一轮 render 阶段完成后待提交的 Fiber 树根（HostRoot wip），在 commitRoot 中切换为 current
+ * 通过 FiberRootNode，将真实容器与 current / finishedWork 两棵 Fiber 树关联起来，作为调度和提交的统一入口。
+ */
 export class FiberRootNode {
     container: Container;
     current: FiberNode;
@@ -61,7 +69,15 @@ export class FiberRootNode {
     }
 }
 
-// 根据 FiberRootNode.current 创建 workInProgress
+/**
+ * @title: 创建 workInProgress
+ * @param: current 当前 Fiber 节点
+ * @param: pendingProps 新的属性
+ * @return: FiberNode
+ * @description: 创建新的 workInProgress 节点，并复制当前节点的大部分属性，用于在协调过程中进行更新
+ * @date: 2026/3/3
+ */
+
 export const createWorkInProgress = (
     current: FiberNode,
     pendingProps: Props
@@ -92,7 +108,13 @@ export const createWorkInProgress = (
     return workInProgress;
 };
 
-// 根据 DOM 节点创建新的 Fiber 节点
+/**
+ * @title: 根据 DOM 节点创建新的 Fiber 节点
+ * @param: element React 元素
+ * @return: FiberNode
+ * @description: 必须是 DOM 元素，不能是函数组件或类组件
+ * @date: 2026/3/3
+ */
 export function createFiberFromElement(element: ReactElementType): FiberNode {
     const {type, key, props} = element;
     let fiberTag: WorkTag = FunctionComponent;

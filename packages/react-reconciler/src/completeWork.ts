@@ -9,8 +9,17 @@ import {FunctionComponent, HostComponent, HostRoot, HostText} from './workTags';
 import {NoFlags} from './fiberFlags';
 
 // 生成更新计划，计算和收集更新 flags
+/**
+ * @title: 结束调和,生成更新计划
+ * @param: workInProgress 要结束调和的 FiberNode
+ * @return: 返回下一个要结束调和的 FiberNode
+ * @description: 结束调和阶段，生成更新计划，计算和收集更新 flags
+ * @date: 2026/3/3
+ */
 export const completeWork = (workInProgress: FiberNode) => {
+    // 拿到新的属性
     const newProps = workInProgress.pendingProps;
+    // 拿到当前的 FiberNode
     const current = workInProgress.alternate;
     switch (workInProgress.tag) {
         case HostRoot:
@@ -53,36 +62,51 @@ export const completeWork = (workInProgress: FiberNode) => {
             return null;
     }
 };
+/**
+ * @title: 将 wip 子树中的 Host 节点挂到同一 parent DOM 下
+ * @param: parent Container; workInProgress FiberNode
+ * @return: void
+ * @description: 深度优先遍历 workInProgress 的子树，把其中所有 HostComponent/HostText 对应的 stateNode
+ *               通过 appendInitialChild 依次挂到 parent 上，用于构建 parent 自身的 DOM 子树；
+ *               不负责将 parent 插入根 container，真正挂载发生在提交阶段的 commitPlacement 中。
+ * @date: 2026/3/3
+ */
 
 function appendAllChildren(parent: Container, workInProgress: FiberNode) {
     let node = workInProgress.child;
     while (node !== null) {
         if (node.tag == HostComponent || node.tag == HostText) {
-            // 处理原生 DOM 元素节点或文本节点
+            // 如果是原生DOM节点或者Text节点
             appendInitialChild(parent, node.stateNode);
         } else if (node.child !== null) {
-            // 递归处理其他类型的组件节点的子节点
-            node.child = node;
+            // 如果不是上述类型,但是有子节点,那么继续深入
+            node.child.return = node;
             node = node.child;
             continue;
         }
         if (node == workInProgress) {
             return;
         }
-
         while (node.sibling === null) {
+            // 没有兄弟就往上回溯,知道起点wip或者root
             if (node.return === null || node.return === workInProgress) {
                 return;
             }
             node = node.return;
         }
-        // 处理下一个兄弟节点
+        // 有兄弟就处理兄弟节点
         node.sibling.return = node.return;
-        node.sibling = node;
+        node=node.sibling;
     }
 }
 
-// 收集更新 flags，将子 FiberNode 的 flags 冒泡到父 FiberNode 上
+/**
+ * @title: 收集更新 flags
+ * @param: workInProgress 要收集更新 flags 的 FiberNode
+ * @return: void
+ * @description: 冒泡机制,收集子节点的flags和subtreeFlags，给wip设置
+ * @date: 2026/3/3
+ */
 function bubbleProperties(workInProgress: FiberNode) {
     let subtreeFlags = NoFlags;
     let child = workInProgress.child;
@@ -90,7 +114,7 @@ function bubbleProperties(workInProgress: FiberNode) {
         subtreeFlags |= child.subtreeFlags;
         subtreeFlags |= child.flags;
 
-        child.return = workInProgress;
+        child.return = workInProgress;//这一步可能是多余的,因为 child.return 已经赋值过了
         child = child.sibling;
     }
 

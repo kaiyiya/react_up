@@ -7,13 +7,25 @@ import {commitMutationEffects} from './commitWork';
 
 let workInProgress: FiberNode | null = null;
 
-// 调度功能
+/**
+ * @title: 调度更新
+ * @param: fiber 更新的 Fiber 节点
+ * @return: void
+ * @description: 调度更新，从触发更新的节点开始，向上遍历到 FiberRootNode，然后开始调和过程
+ * @date: 2026/3/3
+ */
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
     const root = markUpdateFromFiberToRoot(fiber);
     renderRoot(root);
 }
 
-// 从触发更新的节点向上遍历到 FiberRootNode
+/**
+ * @title: 从触发更新的节点向上遍历到 FiberRootNode
+ * @param: fiber 触发更新的 Fiber 节点
+ * @return: FiberRootNode
+ * @description: 从触发更新的节点开始，向上遍历到 FiberRootNode
+ * @date: 2026/3/3
+ */
 function markUpdateFromFiberToRoot(fiber: FiberNode) {
     let node = fiber;
     while (node.return !== null) {
@@ -25,6 +37,18 @@ function markUpdateFromFiberToRoot(fiber: FiberNode) {
     return null;
 }
 
+/**
+ * @title: 渲染根 Fiber 节点
+ * @param: root 根 Fiber 节点
+ * @return: void
+ * @description: 调度更新，从根 Fiber 节点开始，进行调和过程
+ * 主要分为以下几步:
+ * 1.创建工作InProgress Fiber 节点 wip
+ * 2.进行workLoop，深度优先遍历
+ * 3.完成调和过程，生成新的 Fiber 树
+ * 4.提交阶段，将新的 Fiber 树应用到 DOM 上
+ * @date: 2026/3/3
+ */
 function renderRoot(root: FiberRootNode) {
     // 初始化 workInProgress 变量
     prepareFreshStack(root);
@@ -41,23 +65,46 @@ function renderRoot(root: FiberRootNode) {
 
     // 创建根 Fiber 树的 Root Fiber
     const finishedWork = root.current.alternate;
+    // finishedWork 表示当前完成的 Fiber 树的根节点
     root.finishedWork = finishedWork;
-
-    // 提交阶段的入口函数
+    // 提交阶段
     commitRoot(root);
 }
 
-// 初始化 workInProgress 变量
+/**
+ * @title: 准备新的 Fiber 节点
+ * @param: root 根 Fiber 节点
+ * @return: void
+ * @description: 创建一个工作中的 Fiber 节点，用于后续的调和过程
+ * @date: 2026/3/3
+ */
 function prepareFreshStack(root: FiberRootNode) {
     workInProgress = createWorkInProgress(root.current, {});
 }
 
-// 深度优先遍历，向下递归子节点
+/**
+ * @title: 工作循环
+ * @param: void
+ * @return: void
+ * @description: 深度优先遍历，进行调和过程,直到没有可调和的 Fiber 节点为止
+ * @date: 2026/3/3
+ */
 function workLoop() {
     while (workInProgress !== null) {
         performUnitOfWork(workInProgress);
     }
 }
+
+/**
+ * @title: 执行当前工作节点
+ * @param: fiber FiberNode
+ * @return: void
+ * @description: 分为以下几个步骤:
+ * 1.调用 beginWork，比较并返回子 FiberNode
+ * 2.如果没有子节点，则调用 completeUnitOfWork，完成调和过程
+ * 3.如果有子节点，则继续向下深度遍历
+ * @date: 2026/3/3
+ */
 
 function performUnitOfWork(fiber: FiberNode) {
     // 比较并返回子 FiberNode
@@ -73,7 +120,14 @@ function performUnitOfWork(fiber: FiberNode) {
     }
 }
 
-// 深度优先遍历，向下递归子节点
+/**
+ * @title: 完成调和过程
+ * @param: fiber FiberNode
+ * @return: void
+ * @description: 从当前 Fiber 节点开始，向上遍历，完成调和过程
+ * @date: 2026/3/3
+ */
+
 function completeUnitOfWork(fiber: FiberNode) {
     let node: FiberNode | null = fiber;
     do {
@@ -89,9 +143,19 @@ function completeUnitOfWork(fiber: FiberNode) {
         workInProgress = node;
     } while (node !== null);
 }
+/**
+ * @title: 提交阶段入口
+ * @param: root FiberRootNode
+ * @return: void
+ * @description: 以 root.finishedWork 为根，执行提交阶段：
+ *               先根据 flags/subtreeFlags 判断是否存在需要处理的副作用，
+ *               若存在则遍历整棵 finishedWork 树执行 commitMutationEffects，
+ *               最后将 root.current 切换为 finishedWork，完成新旧 Fiber 树的替换。
+ * @date: 2026/3/3
+ */
 
 function commitRoot(root: FiberRootNode) {
-    const finishedWork = root.finishedWork;
+    const finishedWork = root.finishedWork;//接力棒,起到新旧树切换的衔接作用
     if (finishedWork === null) {
         return;
     }
@@ -104,8 +168,7 @@ function commitRoot(root: FiberRootNode) {
     root.finishedWork = null;
 
     // 判断是否存在 3 个子阶段需要执行的操作
-    const subtreeHasEffects =
-        (finishedWork.subtreeFlags & MutationMask) !== NoFlags;
+    const subtreeHasEffects = (finishedWork.subtreeFlags & MutationMask) !== NoFlags;
     const rootHasEffects = (finishedWork.flags & MutationMask) !== NoFlags;
 
     if (subtreeHasEffects || rootHasEffects) {
