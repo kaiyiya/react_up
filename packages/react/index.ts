@@ -4,6 +4,9 @@ import currentDispatcher, {
 } from './src/currentDispatcher';
 import {jsx} from './src/jsx';
 
+// 对标 React.createElement，提供具名导出，方便 UMD 挂到全局 React 上
+export const createElement = jsx;
+
 export const useState: Dispatcher['useState'] = (initialState) => {
     const dispatcher = resolveDispatcher();
     return dispatcher.useState(initialState);

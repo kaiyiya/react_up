@@ -88,7 +88,7 @@ function appendAllChildren(parent: Container, workInProgress: FiberNode) {
             return;
         }
         while (node.sibling === null) {
-            // 没有兄弟就往上回溯,知道起点wip或者root
+            // 没有兄弟就往上回溯,直到起点wip或者root
             if (node.return === null || node.return === workInProgress) {
                 return;
             }
