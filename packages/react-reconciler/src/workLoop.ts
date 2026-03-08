@@ -9,7 +9,7 @@ let workInProgress: FiberNode | null = null;
 
 /**
  * @title: 调度更新
- * @param: fiber 更新的 Fiber 节点
+ * @params: fiber 更新的 Fiber 节点
  * @return: void
  * @description: 调度更新，从触发更新的节点开始，向上遍历到 FiberRootNode，然后开始调和过程
  * @date: 2026/3/3
@@ -21,7 +21,7 @@ export function scheduleUpdateOnFiber(fiber: FiberNode) {
 
 /**
  * @title: 从触发更新的节点向上遍历到 FiberRootNode
- * @param: fiber 触发更新的 Fiber 节点
+ * @params: fiber 触发更新的 Fiber 节点
  * @return: FiberRootNode
  * @description: 从触发更新的节点开始，向上遍历到 FiberRootNode
  * @date: 2026/3/3
@@ -39,7 +39,7 @@ function markUpdateFromFiberToRoot(fiber: FiberNode) {
 
 /**
  * @title: 渲染根 Fiber 节点
- * @param: root 根 Fiber 节点
+ * @params: root 根 Fiber 节点
  * @return: void
  * @description: 调度更新，从根 Fiber 节点开始，进行调和过程
  * 主要分为以下几步:
@@ -73,7 +73,7 @@ function renderRoot(root: FiberRootNode) {
 
 /**
  * @title: 准备新的 Fiber 节点
- * @param: root 根 Fiber 节点
+ * @params: root 根 Fiber 节点
  * @return: void
  * @description: 创建一个工作中的 Fiber 节点，用于后续的调和过程
  * @date: 2026/3/3
@@ -84,7 +84,7 @@ function prepareFreshStack(root: FiberRootNode) {
 
 /**
  * @title: 工作循环
- * @param: void
+ * @params: void
  * @return: void
  * @description: 深度优先遍历，进行调和过程,直到没有可调和的 Fiber 节点为止
  * @date: 2026/3/3
@@ -97,7 +97,7 @@ function workLoop() {
 
 /**
  * @title: 执行当前工作节点
- * @param: fiber FiberNode
+ * @params: fiber FiberNode
  * @return: void
  * @description: 分为以下几个步骤:
  * 1.调用 beginWork，比较并返回子 FiberNode
@@ -122,7 +122,7 @@ function performUnitOfWork(fiber: FiberNode) {
 
 /**
  * @title: 完成调和过程
- * @param: fiber FiberNode
+ * @params: fiber FiberNode
  * @return: void
  * @description: 从当前 Fiber 节点开始，向上遍历，完成调和过程
  * @date: 2026/3/3
@@ -145,7 +145,7 @@ function completeUnitOfWork(fiber: FiberNode) {
 }
 /**
  * @title: 提交阶段入口
- * @param: root FiberRootNode
+ * @params: root FiberRootNode
  * @return: void
  * @description: 以 root.finishedWork 为根，执行提交阶段：
  *               先根据 flags/subtreeFlags 判断是否存在需要处理的副作用，

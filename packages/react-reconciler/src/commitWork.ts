@@ -12,7 +12,7 @@ import {HostComponent, HostRoot, HostText} from './workTags';
 let nextEffect: FiberNode | null = null;
 /**
  * @title: 提交 mutation 副作用
- * @param: finishedWork FiberNode
+ * @params: finishedWork FiberNode
  * @return: void
  * @description: 以 finishedWork 为根，深度优先遍历整棵 Fiber 树，只在 flags/subtreeFlags
  *               含有 MutationMask 的分支上前进；遍历顺序是：优先向下钻到有 mutation 副作用的
@@ -50,7 +50,7 @@ export const commitMutationEffects = (finishedWork: FiberNode) => {
 };
 /**
  * @title: 处理Fiber节点当前的副作用
- * @param:  finishedWork FiberNode
+ * @params:  finishedWork FiberNode
  * @return: void
  * @description: 处理当前节点的副作用,目前只做了插入阶段的
  * @date: 2026/3/3
@@ -74,7 +74,7 @@ const commitMutationEffectsOnFiber = (finishedWork: FiberNode) => {
 
 /**
  * @title: 处理插入的副作用,将 FiberNode 对应的 DOM 插入 parent DOM 中
- * @param: finishedWork FiberNode
+ * @params: finishedWork FiberNode
  * @return: void
  * @description:
  * @date: 2026/3/3
@@ -92,7 +92,7 @@ const commitPlacement = (finishedWork: FiberNode) => {
 
 /**
  * @title: 获取当前 Fiber 对应的宿主父节点 DOM 容器
- * @param: fiber FiberNode
+ * @params: fiber FiberNode
  * @return: Container 或 null
  * @description:
  *   从当前 fiber 向上沿着 return 链查找第一个宿主父节点：
@@ -125,7 +125,7 @@ const getHostParent = (fiber: FiberNode): Container | null => {
 
 /**
  * @title: 插入副作用真正插入到应用容器之中
- * @param: finishedWork FiberNode; hostParent Container
+ * @params: finishedWork FiberNode; hostParent Container
  * @return: void
  * @description: 给定一个 Fiber 节点 finishedWork 和它的宿主父节点 DOM hostParent，
  * 把这棵 Fiber 子树中所有的 HostComponent / HostText 对应的 DOM，

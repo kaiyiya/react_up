@@ -87,6 +87,13 @@ function updateState<T>(initialState: T | (() => T)): [T, Dispatch<T>] {
     throw new Error('Function not implemented.');
 }
 
+/**
+ * @title: 创建Hook
+ * @params:  void
+ * @return: void
+ * @description: 初始化Hook数据结构, 并返回当前正在处理的Hook,每个Hook
+ * @date: 2026/3/7
+ */
 function mountWorkInProgressHook(): Hook {
     const hook: Hook = {
         memorizedState: null,
@@ -112,7 +119,13 @@ function mountWorkInProgressHook(): Hook {
     return workInProgressHook;
 }
 
-// 用于触发状态更新的逻辑
+/**
+ * @title: 分法状态更新
+ * @params: fiber 当前FiberNode, updateQueue 更新队列, action 状态更新逻辑
+ * @return: void
+ * @description: 回到之前的主流程中，重新进入工作循环，重新进入beginWork阶段，重新进入commit阶段等等
+ * @date: 2026/3/7
+ */
 function dispatchSetState<State>(
     fiber: FiberNode,
     updateQueue: UpdateQueue<State>,

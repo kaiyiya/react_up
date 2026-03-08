@@ -71,8 +71,8 @@ export class FiberRootNode {
 
 /**
  * @title: 创建 workInProgress
- * @param: current 当前 Fiber 节点
- * @param: pendingProps 新的属性
+ * @params: current 当前 Fiber 节点
+ * @params: pendingProps 新的属性
  * @return: FiberNode
  * @description: 创建新的 workInProgress 节点，并复制当前节点的大部分属性，用于在协调过程中进行更新
  * @date: 2026/3/3
@@ -110,7 +110,7 @@ export const createWorkInProgress = (
 
 /**
  * @title: 根据 DOM 节点创建新的 Fiber 节点
- * @param: element React 元素
+ * @params: element React 元素
  * @return: FiberNode
  * @description: 必须是 DOM 元素，不能是函数组件或类组件
  * @date: 2026/3/3

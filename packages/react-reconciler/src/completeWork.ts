@@ -11,7 +11,7 @@ import {NoFlags} from './fiberFlags';
 // 生成更新计划，计算和收集更新 flags
 /**
  * @title: 结束调和,生成更新计划
- * @param: workInProgress 要结束调和的 FiberNode
+ * @params: workInProgress 要结束调和的 FiberNode
  * @return: 返回下一个要结束调和的 FiberNode
  * @description: 结束调和阶段，生成更新计划，计算和收集更新 flags
  * @date: 2026/3/3
@@ -64,7 +64,7 @@ export const completeWork = (workInProgress: FiberNode) => {
 };
 /**
  * @title: 将 wip 子树中的 Host 节点挂到同一 parent DOM 下
- * @param: parent Container; workInProgress FiberNode
+ * @params: parent Container; workInProgress FiberNode
  * @return: void
  * @description: 深度优先遍历 workInProgress 的子树，把其中所有 HostComponent/HostText 对应的 stateNode
  *               通过 appendInitialChild 依次挂到 parent 上，用于构建 parent 自身的 DOM 子树；
@@ -102,7 +102,7 @@ function appendAllChildren(parent: Container, workInProgress: FiberNode) {
 
 /**
  * @title: 收集更新 flags
- * @param: workInProgress 要收集更新 flags 的 FiberNode
+ * @params: workInProgress 要收集更新 flags 的 FiberNode
  * @return: void
  * @description: 冒泡机制,收集子节点的flags和subtreeFlags，给wip设置
  * @date: 2026/3/3
