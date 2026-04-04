@@ -1,4 +1,4 @@
-import {Container, appendChildToContainer} from 'hostConfig';
+import {Container, appendChildToContainer, commitUpdate} from 'hostConfig';
 import {FiberNode, FiberRootNode} from './fiber';
 import {
     ChildDeletion,
@@ -63,7 +63,7 @@ const commitMutationEffectsOnFiber = (finishedWork: FiberNode) => {
         finishedWork.flags &= ~Placement;
     }
     if ((flags & Update) !== NoFlags) {
-        // TODO Update
+        commitUpdate(finishedWork);
         finishedWork.flags &= ~Update;
     }
     if ((flags & ChildDeletion) !== NoFlags) {

@@ -6,7 +6,7 @@ import {
 } from 'hostConfig';
 import {FiberNode} from './fiber';
 import {FunctionComponent, HostComponent, HostRoot, HostText} from './workTags';
-import {NoFlags} from './fiberFlags';
+import {NoFlags, Update} from './fiberFlags';
 
 // 生成更新计划，计算和收集更新 flags
 /**
@@ -29,7 +29,7 @@ export const completeWork = (workInProgress: FiberNode) => {
 
         case HostComponent:
             if (current !== null && workInProgress.stateNode) {
-                // TODO: 组件的更新阶段
+                updateHostComponent(current, workInProgress);
             } else {
                 // 首屏渲染阶段
                 // 构建 DOM
@@ -44,7 +44,7 @@ export const completeWork = (workInProgress: FiberNode) => {
 
         case HostText:
             if (current !== null && workInProgress.stateNode) {
-                // TODO: 组件的更新阶段
+                updateHostText(current, workInProgress);
             } else {
                 // 首屏渲染阶段
                 // 构建 DOM
@@ -62,6 +62,25 @@ export const completeWork = (workInProgress: FiberNode) => {
             return null;
     }
 };
+
+function updateHostComponent(current: FiberNode, workInProgress: FiberNode) {
+    if (current.memorizedProps !== workInProgress.pendingProps) {
+        markUpdate(workInProgress);
+    }
+}
+
+function updateHostText(current: FiberNode, workInProgress: FiberNode) {
+    const oldText = current.memorizedProps?.content;
+    const newText = workInProgress.pendingProps.content;
+
+    if (oldText !== newText) {
+        markUpdate(workInProgress);
+    }
+}
+
+function markUpdate(workInProgress: FiberNode) {
+    workInProgress.flags |= Update;
+}
 /**
  * @title: 将 wip 子树中的 Host 节点挂到同一 parent DOM 下
  * @params: parent Container; workInProgress FiberNode

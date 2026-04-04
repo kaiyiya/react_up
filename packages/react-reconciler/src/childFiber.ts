@@ -1,5 +1,9 @@
 import { ReactElementType } from 'shared/ReactTypes';
-import { FiberNode, createFiberFromElement } from './fiber';
+import {
+	FiberNode,
+	createFiberFromElement,
+	createWorkInProgress
+} from './fiber';
 import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbols';
 import { HostText } from './workTags';
 import { Placement } from './fiberFlags';
@@ -13,6 +17,13 @@ import { Placement } from './fiberFlags';
  */
 
 function ChildReconciler(shouldTrackSideEffects: boolean) {
+	function useFiber(fiber: FiberNode, pendingProps: any) {
+		const clone = createWorkInProgress(fiber, pendingProps);
+		clone.index = 0;
+		clone.sibling = null;
+		return clone;
+	}
+
 	/**
 	 * @title: 处理单个 Element 节点
 	 * @params: returnFiber 父 FiberNode
@@ -27,6 +38,16 @@ function ChildReconciler(shouldTrackSideEffects: boolean) {
 		currentFiber: FiberNode | null,
 		element: ReactElementType
 	) {
+		if (
+			currentFiber !== null &&
+			currentFiber.key === element.key &&
+			currentFiber.type === element.type
+		) {
+			const existing = useFiber(currentFiber, element.props);
+			existing.return = returnFiber;
+			return existing;
+		}
+
 		const fiber = createFiberFromElement(element);
 		fiber.return = returnFiber;
 		return fiber;
@@ -47,7 +68,13 @@ function ChildReconciler(shouldTrackSideEffects: boolean) {
 		currentFiber: FiberNode | null,
 		content: string | number
 	) {
-		const fiber = new FiberNode(HostText, { content }, null);
+		if (currentFiber !== null && currentFiber.tag === HostText) {
+			const existing = useFiber(currentFiber, { content: content + '' });
+			existing.return = returnFiber;
+			return existing;
+		}
+
+		const fiber = new FiberNode(HostText, { content: content + '' }, null);
 		fiber.return = returnFiber;
 		return fiber;
 	}
